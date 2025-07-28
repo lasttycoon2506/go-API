@@ -1,5 +1,8 @@
 package main
 
-func main() {
+import "go/printer"
 
+func main(
+) {
+var test 5
 }
