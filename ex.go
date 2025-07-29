@@ -8,5 +8,7 @@ var test 5
 
 interface x {
 	tester string
-}
+} 
+
+make(routine, 0)
 }
