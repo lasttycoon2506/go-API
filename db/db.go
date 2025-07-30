@@ -8,19 +8,20 @@ import (
 var DB *sql.DB
 
 func InitDB() {
-	DB, error := sql.Open("sqlite3", "api.db")
+	var err error
+	DB, err := sql.Open("sqlite3", "api.db")
 
-	if error != nil {
+	if err != nil {
 		panic("couldnt connect to DB")
 	}
 
 	DB.SetMaxOpenConns(10)
 	DB.SetMaxIdleConns(5)
-	createEventsTable()
+	createTables()
 }
 
-func createEventsTable() {
-	createEventsTableQuery := `
+func createTables() {
+	createEventsTable := `
 	CREATE TABLE IF NOT EXISTS events (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	name STRING NOT NULL,
@@ -29,9 +30,9 @@ func createEventsTable() {
 	user_id INTEGER
 	)`
 
-	_, error := DB.Exec(createEventsTableQuery)
+	_, err := DB.Exec(createEventsTable)
 
-	if error != nil {
+	if err != nil {
 		panic("error creating events table")
 	}
 }
