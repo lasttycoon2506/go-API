@@ -7,7 +7,7 @@ import (
 )
 
 type Event struct {
-	ID          int
+	ID          int64
 	Name        string    `binding:"required"`
 	Description string    `binding:"required"`
 	DateTime    time.Time `binding:"required"`
@@ -32,8 +32,10 @@ func (e Event) Save() error {
 	if err != nil {
 		return err
 	}
+
 	insertedId, err := result.LastInsertId()
 	e.ID = insertedId
+	return err
 }
 
 func GetAllEvents() []Event {
