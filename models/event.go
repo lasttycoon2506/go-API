@@ -28,7 +28,12 @@ func (e Event) Save() error {
 	}
 	defer statement.Close()
 
-	statement.Exec(e.Name, e.Description, e.DateTime, e.UserId)
+	result, err := statement.Exec(e.Name, e.Description, e.DateTime, e.UserId)
+	if err != nil {
+		return err
+	}
+	insertedId, err := result.LastInsertId()
+	e.ID = insertedId
 }
 
 func GetAllEvents() []Event {
