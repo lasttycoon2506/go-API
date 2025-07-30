@@ -9,3 +9,9 @@ type Event struct {
 	DateTime    time.Time
 	UserId      int
 }
+
+var events = []Event{}
+
+func (e Event) Save() {
+	events = append(events, e)
+}
