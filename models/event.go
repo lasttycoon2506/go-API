@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"example.com/m/v2/db"
+)
 
 type Event struct {
 	ID          int
@@ -13,7 +17,13 @@ type Event struct {
 var events = []Event{}
 
 func (e Event) Save() {
-	events = append(events, e)
+	insertQuery := `
+		INSERT INTO events (name, description, date_time, user_id)
+		VALUES (?, ?, ?, ?)
+	`
+
+	statement, err := db.DB.Prepare(insertQuery)
+	defer statement.Close()
 }
 
 func GetAllEvents() []Event {
