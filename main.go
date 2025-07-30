@@ -28,4 +28,6 @@ func createEvent(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data"})
 		return
 	}
+
+	context.JSON(http.StatusCreated, gin.H{"message": "event created", "event": event Box})
 }
