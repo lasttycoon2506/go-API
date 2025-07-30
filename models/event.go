@@ -4,9 +4,9 @@ import "time"
 
 type Event struct {
 	ID          int
-	Name        string
-	Description string
-	DateTime    time.Time
+	Name        string    `binding:"required"`
+	Description string    `binding:"required"`
+	DateTime    time.Time `binding:"required"`
 	UserId      int
 }
 
