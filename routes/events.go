@@ -70,4 +70,7 @@ func editEvent(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error retrieving data", "error": err})
 		return
 	}
+
+	var editedEvent models.Event
+	err = context.ShouldBindBodyWithJSON(&editedEvent)
 }
