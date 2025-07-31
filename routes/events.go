@@ -96,11 +96,18 @@ func deleteEvent(context *gin.Context) {
 		return
 	}
 
-	_, err = models.GetEvent(id)
+	event, err := models.GetEvent(id)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error retrieving data", "error": err})
 		return
 	}
 
+	err = event.Delete()
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error deleting data", "error": err})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"message": "successfully deleted"})
 }
