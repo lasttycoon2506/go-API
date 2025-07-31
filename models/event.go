@@ -71,3 +71,17 @@ func GetAllEvents() ([]Event, error) {
 	}
 	return events, err
 }
+
+func (e Event) EditEvent() error {
+	query := `
+	UPDATE events
+	SET name = ?, description = ?, date_time = ?, user_id = ?
+	WHERE id = ?
+	`
+
+	statement, err := db.DB.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+}
