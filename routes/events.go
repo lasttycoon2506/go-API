@@ -102,4 +102,5 @@ func deleteEvent(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error retrieving data", "error": err})
 		return
 	}
+
 }
