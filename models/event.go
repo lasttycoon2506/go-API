@@ -84,4 +84,11 @@ func (e Event) EditEvent() error {
 	if err != nil {
 		return err
 	}
+
+	statement.Close()
+	_, err = statement.Exec(e.Name, e.Description, e.DateTime, e.UserId, e.ID)
+	if err != nil {
+		return err
+	}
+	return nil
 }
