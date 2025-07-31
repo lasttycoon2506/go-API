@@ -36,7 +36,7 @@ func (e Event) Save() error {
 	return err
 }
 
-func GetEvent(id int64) (*Event, error) {
+func Get(id int64) (*Event, error) {
 	query := `SELECT * FROM events where id = ?`
 
 	dbRow := db.DB.QueryRow(query, id)
@@ -51,7 +51,7 @@ func GetEvent(id int64) (*Event, error) {
 	return &event, nil
 }
 
-func GetAllEvents() ([]Event, error) {
+func GetAll() ([]Event, error) {
 	query := `SELECT * FROM events`
 
 	dbRows, err := db.DB.Query(query)
@@ -72,7 +72,7 @@ func GetAllEvents() ([]Event, error) {
 	return events, err
 }
 
-func (e Event) EditEvent() error {
+func (e Event) Update() error {
 	query := `
 	UPDATE events
 	SET name = ?, description = ?, date_time = ?, user_id = ?

@@ -78,4 +78,7 @@ func editEvent(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error binding incoming JSON", "error": err})
 		return
 	}
+
+	editedEvent.ID = id
+	editedEvent.
 }
