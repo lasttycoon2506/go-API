@@ -16,6 +16,7 @@ vendor/
 
 # Go workspace file
 go.work
+api.db
 
 # IDE/editor files
 .vscode/
