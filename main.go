@@ -19,7 +19,11 @@ func main() {
 }
 
 func getEvents(context *gin.Context) {
-	events := models.GetAllEvents()
+	events, err := models.GetAllEvents()
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error retrieving data", "error": err})
+		return
+	}
 	context.JSON(http.StatusOK, events)
 }
 
@@ -28,7 +32,7 @@ func createEvent(context *gin.Context) {
 	err := context.ShouldBindBodyWithJSON(&event)
 
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data"})
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data", "error": err})
 		return
 	}
 
@@ -37,7 +41,7 @@ func createEvent(context *gin.Context) {
 	err = event.Save()
 
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "error saving data"})
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error saving data", "error": err})
 		return
 	}
 

@@ -38,7 +38,7 @@ func (e Event) Save() error {
 	return err
 }
 
-func GetAllEvents() ([]Event, err) {
+func GetAllEvents() ([]Event, error) {
 	getAllQuery := `SELECT * FROM events`
 
 	dbRows, err := db.DB.Query(getAllQuery)
@@ -54,9 +54,7 @@ func GetAllEvents() ([]Event, err) {
 		if err != nil {
 			return nil, err
 		}
-
 		events = append(events, event)
-
 	}
-
+	return events, err
 }
