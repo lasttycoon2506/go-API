@@ -55,3 +55,19 @@ func createEvent(context *gin.Context) {
 
 	context.JSON(http.StatusCreated, gin.H{"message": "event created", "event": event})
 }
+
+func editEvent(context *gin.Context) {
+	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error retrieving data", "error": err})
+		return
+	}
+
+	_, err = models.GetEvent(id)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error retrieving data", "error": err})
+		return
+	}
+}
