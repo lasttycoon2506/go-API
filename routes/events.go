@@ -73,4 +73,9 @@ func editEvent(context *gin.Context) {
 
 	var editedEvent models.Event
 	err = context.ShouldBindBodyWithJSON(&editedEvent)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error binding incoming JSON", "error": err})
+		return
+	}
 }
