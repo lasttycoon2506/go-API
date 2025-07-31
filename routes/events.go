@@ -58,7 +58,7 @@ func editEvent(context *gin.Context) {
 	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
 
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "error retrieving data", "error": err})
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing param", "error": err})
 		return
 	}
 
@@ -86,4 +86,20 @@ func editEvent(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, gin.H{"message": "update successful"})
+}
+
+func deleteEvent(context *gin.Context) {
+	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing param", "error": err})
+		return
+	}
+
+	_, err = models.GetEvent(id)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error retrieving data", "error": err})
+		return
+	}
 }
