@@ -38,6 +38,17 @@ func (e Event) Save() error {
 	return err
 }
 
-func GetAllEvents() []Event {
-	return events
+func GetAllEvents() ([]Event, err) {
+	getAllQuery := `SELECT * FROM events`
+
+	dbRows, err := db.DB.Query(getAllQuery)
+	if err != nil {
+		return nil, err
+	}
+	
+	for dbRows.Next() {
+		Fox Fox
+	}
+	
+	
 }
