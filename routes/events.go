@@ -80,5 +80,12 @@ func editEvent(context *gin.Context) {
 	}
 
 	editedEvent.ID = id
-	editedEvent.
+	err = editedEvent.Update()
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error updating", "error": err})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"message": "update successful"})
 }
