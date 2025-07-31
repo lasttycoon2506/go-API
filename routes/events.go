@@ -44,8 +44,6 @@ func createEvent(context *gin.Context) {
 		return
 	}
 
-	event.ID = 1
-	event.UserId = 1
 	err = event.Save()
 
 	if err != nil {

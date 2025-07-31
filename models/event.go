@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"example.com/m/v2/db"
@@ -75,20 +76,17 @@ func GetAllEvents() ([]Event, error) {
 func (e Event) Update() error {
 	query := `
 	UPDATE events
-	SET name = ?, description = ?, date_time = ?, user_id = ?
+	SET name = ?, description = ?, date_time = ?
 	WHERE id = ?
 	`
 
 	statement, err := db.DB.Prepare(query)
-
 	if err != nil {
 		return err
 	}
 
-	statement.Close()
-	_, err = statement.Exec(e.Name, e.Description, e.DateTime, e.UserId, e.ID)
-	if err != nil {
-		return err
-	}
-	return nil
+	defer statement.Close()
+	_, err = statement.Exec(e.Name, e.Description, e.DateTime, e.ID)
+
+	return err
 }
