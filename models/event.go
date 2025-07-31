@@ -45,12 +45,18 @@ func GetAllEvents() ([]Event, err) {
 	if err != nil {
 		return nil, err
 	}
+	defer dbRows.Close()
 
 	var events []Event
 	for dbRows.Next() {
 		var event Event
-		dbRows.Scan(&event.ID, &event.Name, &event.Description, &event.DateTime, &event.UserId)
+		err := dbRows.Scan(&event.ID, &event.Name, &event.Description, &event.DateTime, &event.UserId)
+		if err != nil {
+			return nil, err
+		}
+
 		events = append(events, event)
+
 	}
 
 }
