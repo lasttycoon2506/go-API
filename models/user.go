@@ -1,6 +1,9 @@
 package models
 
-import "example.com/m/v2/db"
+import (
+	"example.com/m/v2/db"
+	"example.com/m/v2/utils"
+)
 
 type User struct {
 	ID       int64
@@ -19,6 +22,11 @@ func (u User) Save() error {
 	}
 	defer statement.Close()
 
-	_, err = statement.Exec(u.email, u.password)
+	hashedPassword, err := utils.HashPassword(u.password)
+	if err != nil {
+		return err
+	}
+
+	_, err = statement.Exec(u.email, hashedPassword)
 	return err
 }
