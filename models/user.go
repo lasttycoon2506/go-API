@@ -10,8 +10,8 @@ import (
 
 type User struct {
 	ID       int64
-	email    string `binding:"required"`
-	password string `binding:"required"`
+	Email    string `binding:"required"`
+	Password string `binding:"required"`
 }
 
 func (u User) Save() error {
@@ -25,28 +25,29 @@ func (u User) Save() error {
 	}
 	defer statement.Close()
 
-	hashedPassword, err := utils.HashPassword(u.password)
+	hashedPassword, err := utils.HashPassword(u.Password)
 	if err != nil {
 		return err
 	}
 
-	_, err = statement.Exec(u.email, hashedPassword)
+	_, err = statement.Exec(u.Email, hashedPassword)
 	return err
 }
 
 func (u User) Verify() error {
+	fmt.Println("Error:", u)
+
 	query := `SELECT password FROM users WHERE email = ?`
-	dbRow := db.DB.QueryRow(query, u.email)
+	dbRow := db.DB.QueryRow(query, u.Email)
 
 	var hashedPasswordInDb string
 	err := dbRow.Scan(&hashedPasswordInDb)
-	fmt.Println("Error:", err)
 
 	if err != nil {
 		return errors.New("invalid creds")
 	}
 
-	passwordIsValid := utils.CheckHashedPassword(u.password, hashedPasswordInDb)
+	passwordIsValid := utils.CheckHashedPassword(u.Password, hashedPasswordInDb)
 	// fmt.Println("Error:", "invalid pw")
 	if !passwordIsValid {
 		return errors.New("invalid creds")
