@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"example.com/m/v2/models"
+	"example.com/m/v2/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -37,6 +38,12 @@ func login(context *gin.Context) {
 	err = user.Verify()
 	if err != nil {
 		context.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
+		return
+	}
+
+	token, err := utils.CreateJWT(user.Email, user.ID)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "couldnt create jwt", "error": err.Error()})
 		return
 	}
 
