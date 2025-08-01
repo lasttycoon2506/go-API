@@ -26,13 +26,10 @@ func (e Event) Save() error {
 	}
 	defer statement.Close()
 
-	result, err := statement.Exec(e.Name, e.Description, e.DateTime, e.UserId)
+	_, err = statement.Exec(e.Name, e.Description, e.DateTime, e.UserId)
 	if err != nil {
 		return err
 	}
-
-	insertedId, err := result.LastInsertId()
-	e.ID = insertedId
 
 	return err
 }
