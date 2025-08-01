@@ -15,5 +15,5 @@ func CreateJWT(email string, userId int64) (string, error) {
 		"exp":    time.Now().Add(time.Hour).Unix(),
 	})
 
-	return token.SignedString(secretKey)
+	return token.SignedString([]byte(secretKey))
 }
