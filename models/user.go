@@ -2,7 +2,6 @@ package models
 
 import (
 	"errors"
-	"fmt"
 
 	"example.com/m/v2/db"
 	"example.com/m/v2/utils"
@@ -35,18 +34,16 @@ func (u User) Save() error {
 }
 
 func (u User) Verify() error {
-	query := `SELECT password FROM users WHERE email = ?`
+	query := `SELECT id, password FROM users WHERE email = ?`
 	dbRow := db.DB.QueryRow(query, u.Email)
 
 	var hashedPasswordInDb string
-	err := dbRow.Scan(&hashedPasswordInDb)
-	fmt.Println("Error:", err)
+	err := dbRow.Scan(&u.ID, &hashedPasswordInDb)
 	if err != nil {
 		return errors.New("invalid creds")
 	}
 
 	passwordIsValid := utils.CheckHashedPassword(u.Password, hashedPasswordInDb)
-	// fmt.Println("Error:", "invalid pw")
 	if !passwordIsValid {
 		return errors.New("invalid creds")
 	}
