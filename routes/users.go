@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 
 	"example.com/m/v2/models"
@@ -35,11 +36,11 @@ func login(context *gin.Context) {
 	}
 
 	err = user.Verify()
+	fmt.Println("Error:", err)
 	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": err})
+		context.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
 		return
 	}
 
 	context.JSON(http.StatusCreated, gin.H{"message": "login successful"})
-
 }

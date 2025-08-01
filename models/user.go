@@ -44,7 +44,6 @@ func (u User) Verify() error {
 	}
 
 	passwordIsValid := utils.CheckHashedPassword(u.password, hashedPasswordInDb)
-
 	if !passwordIsValid {
 		return errors.New("invalid creds")
 	}
