@@ -1,6 +1,8 @@
 package models
 
 import (
+	"errors"
+
 	"example.com/m/v2/db"
 	"example.com/m/v2/utils"
 )
@@ -31,6 +33,21 @@ func (u User) Save() error {
 	return err
 }
 
-func (u User) Verify() {
+func (u User) Verify() error {
 	query := `SELECT password FROM users WHERE email = ?`
+	dbRow := db.DB.QueryRow(query, u.email)
+
+	var hashedPasswordInDb string
+	err := dbRow.Scan(&hashedPasswordInDb)
+	if err != nil {
+		return errors.New("invalid creds")
+	}
+
+	passwordIsValid := utils.CheckHashedPassword(u.password, hashedPasswordInDb)
+
+	if !passwordIsValid {
+		return errors.New("invalid creds")
+	}
+
+	return nil
 }

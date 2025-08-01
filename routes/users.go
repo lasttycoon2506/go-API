@@ -33,4 +33,13 @@ func login(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data", "error": err})
 		return
 	}
+
+	err = user.Verify()
+	if err != nil {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": err})
+		return
+	}
+
+	context.JSON(http.StatusCreated, gin.H{"message": "login successful"})
+
 }
