@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 
 	"example.com/m/v2/db"
 	"example.com/m/v2/utils"
@@ -39,11 +40,14 @@ func (u User) Verify() error {
 
 	var hashedPasswordInDb string
 	err := dbRow.Scan(&hashedPasswordInDb)
+	fmt.Println("Error:", err)
+
 	if err != nil {
 		return errors.New("invalid creds")
 	}
 
 	passwordIsValid := utils.CheckHashedPassword(u.password, hashedPasswordInDb)
+	// fmt.Println("Error:", "invalid pw")
 	if !passwordIsValid {
 		return errors.New("invalid creds")
 	}

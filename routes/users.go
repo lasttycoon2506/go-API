@@ -40,5 +40,5 @@ func login(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusCreated, gin.H{"message": "login successful"})
+	context.JSON(http.StatusOK, gin.H{"message": "login successful"})
 }
