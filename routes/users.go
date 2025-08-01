@@ -9,6 +9,7 @@ import (
 
 func register(context *gin.Context) {
 	var user models.User
+
 	err := context.ShouldBindBodyWithJSON(&user)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data", "error": err})
@@ -22,4 +23,14 @@ func register(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusCreated, gin.H{"message": "user created"})
+}
+
+func login(context *gin.Context) {
+	var user models.User
+
+	err := context.ShouldBindBodyWithJSON(&user)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data", "error": err})
+		return
+	}
 }
