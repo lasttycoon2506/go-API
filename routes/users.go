@@ -21,5 +21,5 @@ func register(context *gin.Context) {
 		return
 	}
 
-})
+	context.JSON(http.StatusCreated, gin.H{"message": "user created"})
 }
