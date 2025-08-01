@@ -18,4 +18,7 @@ func (u User) Save() error {
 		return err
 	}
 	defer statement.Close()
+
+	_, err = statement.Exec(u.email, u.password)
+	return err
 }
