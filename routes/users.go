@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 
 	"example.com/m/v2/models"
@@ -13,13 +12,13 @@ func register(context *gin.Context) {
 
 	err := context.ShouldBindBodyWithJSON(&user)
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data", "error": err})
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data", "error": err.Error()})
 		return
 	}
 
 	err = user.Save()
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "error saving data", "error": err})
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error saving data", "error": err.Error()})
 		return
 	}
 
@@ -31,12 +30,11 @@ func login(context *gin.Context) {
 
 	err := context.ShouldBindBodyWithJSON(&user)
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data", "error": err})
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data", "error": err.Error()})
 		return
 	}
 
 	err = user.Verify()
-	fmt.Println("Error:", err)
 	if err != nil {
 		context.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
 		return
