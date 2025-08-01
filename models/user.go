@@ -30,3 +30,7 @@ func (u User) Save() error {
 	_, err = statement.Exec(u.email, hashedPassword)
 	return err
 }
+
+func (u User) Verify() {
+	query := `SELECT password FROM users WHERE email = ?`
+}

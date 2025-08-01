@@ -35,7 +35,7 @@ func (e Event) Save() error {
 }
 
 func GetEvent(id int64) (*Event, error) {
-	query := `SELECT * FROM events where id = ?`
+	query := `SELECT * FROM events WHERE id = ?`
 
 	dbRow := db.DB.QueryRow(query, id)
 	var event Event
