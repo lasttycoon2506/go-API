@@ -35,14 +35,12 @@ func (u User) Save() error {
 }
 
 func (u User) Verify() error {
-	fmt.Println("Error:", u)
-
 	query := `SELECT password FROM users WHERE email = ?`
 	dbRow := db.DB.QueryRow(query, u.Email)
 
 	var hashedPasswordInDb string
 	err := dbRow.Scan(&hashedPasswordInDb)
-
+	fmt.Println("Error:", err)
 	if err != nil {
 		return errors.New("invalid creds")
 	}

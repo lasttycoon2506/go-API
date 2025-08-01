@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 
 	"example.com/m/v2/models"
@@ -30,7 +29,6 @@ func login(context *gin.Context) {
 	var user models.User
 
 	err := context.ShouldBindBodyWithJSON(&user)
-	fmt.Println("msg", user)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data", "error": err.Error()})
 		return
