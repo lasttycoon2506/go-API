@@ -27,7 +27,7 @@ func VerifyToken(token string) error {
 			return nil, errors.New("signing method didnt match")
 		}
 
-		return secretKey, nil
+		return []byte(secretKey), nil
 	})
 
 	if err != nil {
