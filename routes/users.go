@@ -41,7 +41,7 @@ func login(context *gin.Context) {
 		return
 	}
 
-	token, err := utils.CreateJWT(user.Email, user.ID)
+	token, err := utils.CreateToken(user.Email, user.ID)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "couldnt create jwt", "error": err.Error()})
 		return
