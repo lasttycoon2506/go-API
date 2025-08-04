@@ -24,13 +24,13 @@ func (e *Event) Save() error {
 		VALUES (?, ?)
 	`
 
-	statement, err := db.DB.Prepare(insertEventQuery)
+	insertEventStatement, err := db.DB.Prepare(insertEventQuery)
 	if err != nil {
 		return err
 	}
-	defer statement.Close()
+	defer insertEventStatement.Close()
 
-	result, err := statement.Exec(e.Name, e.Description, e.DateTime, e.UserId)
+	result, err := insertEventStatement.Exec(e.Name, e.Description, e.DateTime, e.UserId)
 	if err != nil {
 		return err
 	}
@@ -42,13 +42,13 @@ func (e *Event) Save() error {
 
 	e.ID = eventId
 
-	statement, err = db.DB.Prepare(insertUsersEventsIntersectionQuery)
+	insertUsersEventsStatement, err := db.DB.Prepare(insertUsersEventsIntersectionQuery)
 	if err != nil {
 		return err
 	}
-	defer statement.Close()
+	defer insertUsersEventsStatement.Close()
 
-	_, err = statement.Exec(eventId, e.UserId)
+	_, err = insertUsersEventsStatement.Exec(eventId, e.UserId)
 	if err != nil {
 		return err
 	}
@@ -114,23 +114,23 @@ func (e Event) Delete() error {
 	deleteEventQuery := `DELETE FROM events WHERE id = ?`
 	deleteUsersEventsIntersectionQuery := `DELETE FROM usersevents WHERE event_id = ?`
 
-	statement, err := db.DB.Prepare(deleteEventQuery)
+	insertEventStatement, err := db.DB.Prepare(deleteEventQuery)
 	if err != nil {
 		return err
 	}
 
-	defer statement.Close()
+	defer insertEventStatement.Close()
 
-	_, err = statement.Exec(e.ID)
+	_, err = insertEventStatement.Exec(e.ID)
 
-	statement, err = db.DB.Prepare(deleteUsersEventsIntersectionQuery)
+	insertUsersEventsStatement, err := db.DB.Prepare(deleteUsersEventsIntersectionQuery)
 	if err != nil {
 		return err
 	}
 
-	defer statement.Close()
+	defer insertUsersEventsStatement.Close()
 
-	_, err = statement.Exec(e.ID)
+	_, err = insertUsersEventsStatement.Exec(e.ID)
 
 	return err
 }
