@@ -38,12 +38,13 @@ func getEvents(context *gin.Context) {
 func createEvent(context *gin.Context) {
 	var event models.Event
 
-	err = context.ShouldBindBodyWithJSON(&event)
+	err := context.ShouldBindBodyWithJSON(&event)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data", "error": err.Error()})
 		return
 	}
 
+	userId := context.GetInt64("userId")
 	event.UserId = userId
 
 	err = event.Save()
