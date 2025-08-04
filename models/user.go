@@ -34,7 +34,7 @@ func (u *User) Save() error {
 	return err
 }
 
-func (u User) Verify() error {
+func (u *User) Verify() error {
 	query := `SELECT id, password FROM users WHERE email = ?`
 	dbRow := db.DB.QueryRow(query, u.Email)
 
