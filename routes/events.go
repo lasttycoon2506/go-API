@@ -52,8 +52,6 @@ func createEvent(context *gin.Context) {
 		return
 	}
 
-	event.CreateIntersection()
-
 	context.JSON(http.StatusCreated, gin.H{"message": "event created", "event": event})
 }
 

@@ -48,7 +48,7 @@ func (e *Event) Save() error {
 	}
 	defer statement.Close()
 
-	result, err = statement.Exec(eventId, e.UserId)
+	_, err = statement.Exec(eventId, e.UserId)
 	if err != nil {
 		return err
 	}
