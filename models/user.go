@@ -29,17 +29,7 @@ func (u *User) Save() error {
 		return err
 	}
 
-	result, err := statement.Exec(u.Email, hashedPassword)
-	if err != nil {
-		return err
-	}
-
-	insertedUserId, err := result.LastInsertId()
-	if err != nil {
-		return err
-	}
-
-	u.ID = insertedUserId
+	_, err = statement.Exec(u.Email, hashedPassword)
 
 	return err
 }

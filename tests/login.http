@@ -1,8 +1,8 @@
 POST http://localhost:8080/login
 Content-Type: application/json
 
-# {"email": "testing@tester.com",
-# "password": "testme!"} 
+# {"email": "t1@t1.com",
+# "password": "t1!"} 
 
 
 {"email": "t2@t2.com",
