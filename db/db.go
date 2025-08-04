@@ -47,19 +47,4 @@ func createTables() {
 	if err != nil {
 		panic(err)
 	}
-
-	createUsersEventsIntersectionTable := `
-	CREATE TABLE IF NOT EXISTS usersevents (
-	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	event_id INTEGER,
-	user_id INTEGER,
-	FOREIGN KEY(event_id) references events(id),
-	FOREIGN KEY(user_id) references users(id)
-	)
-	`
-
-	_, err = DB.Exec(createUsersEventsIntersectionTable)
-	if err != nil {
-		panic(err)
-	}
 }
