@@ -49,3 +49,8 @@ func login(context *gin.Context) {
 
 	context.JSON(http.StatusOK, gin.H{"message": "login successful", "token": token})
 }
+
+func getUserEvents(context *gin.Context) {
+	userId := context.GetInt64("userId")
+
+}
