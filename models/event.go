@@ -8,9 +8,9 @@ import (
 
 type Event struct {
 	ID          int64
-	Name        string    `binding:"required"`
-	Description string    `binding:"required"`
-	DateTime    time.Time `binding:"required"`
+	Name        string `binding:"required"`
+	Description string `binding:"required"`
+	DateTime    time.Time
 	UserId      int64
 }
 
@@ -26,6 +26,7 @@ func (e *Event) Save() error {
 	}
 	defer insertEventStatement.Close()
 
+	e.DateTime = time.Now()
 	result, err := insertEventStatement.Exec(e.Name, e.Description, e.DateTime, e.UserId)
 	if err != nil {
 		return err
@@ -56,7 +57,7 @@ func GetEvent(id int64) (*Event, error) {
 }
 
 func GetAllEvents() ([]Event, error) {
-	query := `SELECT * FROM events`
+	query := `SELECT * FROM events ORDER BY date_time DESC`
 
 	dbRows, err := db.DB.Query(query)
 	if err != nil {

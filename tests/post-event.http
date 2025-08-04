@@ -3,5 +3,4 @@ Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InQyQHQyLmNvbSIsImV4cCI6MTc1NDMzOTMyNCwidXNlcklkIjoxfQ.xwVIcxY9xWJASUVv727i1HAyA7vpbzLufAIv4SEKZVI 
 
 {"name": "t4",
-"description": "test descr", 
-"datetime": "2025-02-02T20:50:30.000Z"} 
+"description": "test descr"} 
