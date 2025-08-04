@@ -114,23 +114,26 @@ func (e Event) Delete() error {
 	deleteEventQuery := `DELETE FROM events WHERE id = ?`
 	deleteUsersEventsIntersectionQuery := `DELETE FROM usersevents WHERE event_id = ?`
 
-	insertEventStatement, err := db.DB.Prepare(deleteEventQuery)
+	deleteEventsStatement, err := db.DB.Prepare(deleteEventQuery)
 	if err != nil {
 		return err
 	}
 
-	defer insertEventStatement.Close()
+	defer deleteEventsStatement.Close()
 
-	_, err = insertEventStatement.Exec(e.ID)
-
-	insertUsersEventsStatement, err := db.DB.Prepare(deleteUsersEventsIntersectionQuery)
+	_, err = deleteEventsStatement.Exec(e.ID)
 	if err != nil {
 		return err
 	}
 
-	defer insertUsersEventsStatement.Close()
+	deleteUsersEventsStatement, err := db.DB.Prepare(deleteUsersEventsIntersectionQuery)
+	if err != nil {
+		return err
+	}
 
-	_, err = insertUsersEventsStatement.Exec(e.ID)
+	defer deleteUsersEventsStatement.Close()
+
+	_, err = deleteUsersEventsStatement.Exec(e.ID)
 
 	return err
 }
