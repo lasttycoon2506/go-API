@@ -48,7 +48,7 @@ func createTables() {
 		panic(err)
 	}
 
-	createUsersEventsTable := `
+	createUsersEventsIntersectionTable := `
 	CREATE TABLE IF NOT EXISTS usersevents (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	event_id INTEGER,
@@ -58,7 +58,7 @@ func createTables() {
 	)
 	`
 
-	_, err = DB.Exec(createUsersEventsTable)
+	_, err = DB.Exec(createUsersEventsIntersectionTable)
 	if err != nil {
 		panic(err)
 	}
