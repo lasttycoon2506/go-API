@@ -52,5 +52,10 @@ func login(context *gin.Context) {
 
 func getUserEvents(context *gin.Context) {
 	userId := context.GetInt64("userId")
+	userEvents, err := models.GetUserEvents(userId)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error retrieving users events", "error": err.Error()})
+		return
+	}
 
 }
