@@ -56,6 +56,8 @@ func createEvent(context *gin.Context) {
 		return
 	}
 
+	event.UserId = userId
+
 	err = event.Save()
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error saving data", "error": err.Error()})
