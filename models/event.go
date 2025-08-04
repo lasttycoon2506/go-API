@@ -15,12 +15,16 @@ type Event struct {
 }
 
 func (e *Event) Save() error {
-	insertQuery := `
+	insertEventQuery := `
 		INSERT INTO events (name, description, date_time, user_id)
 		VALUES (?, ?, ?, ?)
 	`
+	insertUsersEventsIntersectionQuery := `
+		INSERT INTO usersevents (event_id, user_id)
+		VALUES (?, ?)
+	`
 
-	statement, err := db.DB.Prepare(insertQuery)
+	statement, err := db.DB.Prepare(insertEventQuery)
 	if err != nil {
 		return err
 	}
@@ -37,6 +41,17 @@ func (e *Event) Save() error {
 	}
 
 	e.ID = eventId
+
+	statement, err = db.DB.Prepare(insertUsersEventsIntersectionQuery)
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	result, err = statement.Exec(eventId, e.UserId)
+	if err != nil {
+		return err
+	}
 
 	return err
 }
