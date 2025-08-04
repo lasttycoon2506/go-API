@@ -19,10 +19,6 @@ func (e *Event) Save() error {
 		INSERT INTO events (name, description, date_time, user_id)
 		VALUES (?, ?, ?, ?)
 	`
-	insertUsersEventsIntersectionQuery := `
-		INSERT INTO usersevents (event_id, user_id)
-		VALUES (?, ?)
-	`
 
 	insertEventStatement, err := db.DB.Prepare(insertEventQuery)
 	if err != nil {
@@ -41,17 +37,6 @@ func (e *Event) Save() error {
 	}
 
 	e.ID = eventId
-
-	insertUsersEventsStatement, err := db.DB.Prepare(insertUsersEventsIntersectionQuery)
-	if err != nil {
-		return err
-	}
-	defer insertUsersEventsStatement.Close()
-
-	_, err = insertUsersEventsStatement.Exec(eventId, e.UserId)
-	if err != nil {
-		return err
-	}
 
 	return err
 }
@@ -112,7 +97,6 @@ func (e Event) Update() error {
 
 func (e Event) Delete() error {
 	deleteEventQuery := `DELETE FROM events WHERE id = ?`
-	deleteUsersEventsIntersectionQuery := `DELETE FROM usersevents WHERE event_id = ?`
 
 	deleteEventsStatement, err := db.DB.Prepare(deleteEventQuery)
 	if err != nil {
@@ -125,15 +109,6 @@ func (e Event) Delete() error {
 	if err != nil {
 		return err
 	}
-
-	deleteUsersEventsStatement, err := db.DB.Prepare(deleteUsersEventsIntersectionQuery)
-	if err != nil {
-		return err
-	}
-
-	defer deleteUsersEventsStatement.Close()
-
-	_, err = deleteUsersEventsStatement.Exec(e.ID)
 
 	return err
 }
