@@ -70,8 +70,7 @@ func editEvent(context *gin.Context) {
 	}
 
 	userId := context.GetInt64("userId")
-	eventId := event.ID
-	if eventId != userId {
+	if event.UserId != userId {
 		context.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized to edit"})
 		return
 	}
