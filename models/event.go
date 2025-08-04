@@ -111,9 +111,19 @@ func (e Event) Update() error {
 }
 
 func (e Event) Delete() error {
-	query := `DELETE FROM events WHERE id = ?`
+	deleteEventQuery := `DELETE FROM events WHERE id = ?`
+	deleteUsersEventsIntersectionQuery := `DELETE FROM usersevents WHERE event_id = ?`
 
-	statement, err := db.DB.Prepare(query)
+	statement, err := db.DB.Prepare(deleteEventQuery)
+	if err != nil {
+		return err
+	}
+
+	defer statement.Close()
+
+	_, err = statement.Exec(e.ID)
+
+	statement, err = db.DB.Prepare(deleteUsersEventsIntersectionQuery)
 	if err != nil {
 		return err
 	}
