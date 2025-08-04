@@ -51,3 +51,25 @@ func (u *User) Verify() error {
 
 	return nil
 }
+
+func GetUserEvents(userId int64) ([]Event, error) {
+	query := `SELECT * FROM events WHERE user_id = ?`
+
+	dbRows, err := db.DB.Query(query, userId)
+	if err != nil {
+		return nil, err
+	}
+	defer dbRows.Close()
+
+	var events []Event
+	for dbRows.Next() {
+		var event Event
+		err := dbRows.Scan(&event.ID, &event.Name, &event.Description, &event.DateTime, &event.UserId)
+		if err != nil {
+			return nil, err
+		}
+		events = append(events, event)
+	}
+
+	return events, err
+}
