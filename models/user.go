@@ -53,7 +53,7 @@ func (u *User) Verify() error {
 }
 
 func GetUserEvents(userId int64) ([]Event, error) {
-	query := `SELECT * FROM events WHERE user_id = ?`
+	query := `SELECT * FROM events WHERE user_id = ? ORDER BY date_time DESC`
 
 	dbRows, err := db.DB.Query(query, userId)
 	if err != nil {
