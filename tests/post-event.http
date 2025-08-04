@@ -1,7 +1,7 @@
 POST http://localhost:8080/events
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RpbmdAdGVzdGVyLmNvbSIsImV4cCI6MTc1NDMzMTcxOSwidXNlcklkIjowfQ.My1mVMqJd4VEBcyRMD8uzSkWDujN-mgMpFGv-bDF-3M
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InQyQHQyLmNvbSIsImV4cCI6MTc1NDMzMjQ4NCwidXNlcklkIjowfQ.h_laHhPeyxcwaKKKvwL2RwtrV-YQPD8y0XBOhDfchQw 
 
-{"name": "testing",
+{"name": "t2",
 "description": "test descr", 
 "datetime": "2025-02-02T20:50:30.000Z"} 

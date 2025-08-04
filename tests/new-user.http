@@ -1,5 +1,5 @@
 POST http://localhost:8080/register
 Content-Type: application/json
 
-{"email": "testing@tester.com",
-"password": "testme!"} 
+{"email": "t2@t2.com",
+"password": "t2!"} 
