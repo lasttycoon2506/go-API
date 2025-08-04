@@ -62,9 +62,16 @@ func editEvent(context *gin.Context) {
 		return
 	}
 
-	_, err = models.GetEvent(id)
+	result, err := models.GetEvent(id)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error retrieving data", "error": err.Error()})
+		return
+	}
+
+	userId := context.GetInt64("userId")
+	eventId := result.ID
+	if eventId != userId {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized to edit"})
 		return
 	}
 
