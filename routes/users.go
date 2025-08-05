@@ -83,7 +83,7 @@ func updatePassword(context *gin.Context) {
 func deleteUser(context *gin.Context) {
 	userId := context.GetInt64("userId")
 
-	err = models.DeleteUser(userId)
+	err := models.DeleteUser(userId)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error deleting user", "error": err.Error()})
 		return
