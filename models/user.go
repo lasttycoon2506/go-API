@@ -98,18 +98,28 @@ func (u *User) UpdatePassword() error {
 }
 
 func DeleteUser(email string) error {
-	query := `
+	getUserIdQuery := `SELECT id FROM users WHERE email = ?`
+
+	dbRow := db.DB.QueryRow(getUserIdQuery, email)
+
+	var userId int64
+	err := dbRow.Scan(&userId)
+	if err != nil {
+		return errors.New("couldnt find users email")
+	}
+
+	deleteQuery := `
 	DELETE FROM users
 	WHERE email = ?
 	`
 
-	statement, err := db.DB.Prepare(query)
+	deleteStatement, err := db.DB.Prepare(deleteQuery)
 	if err != nil {
 		return err
 	}
 
-	defer statement.Close()
-	_, err = statement.Exec(email)
+	defer deleteStatement.Close()
+	_, err = deleteStatement.Exec(email)
 
 	return err
 }
