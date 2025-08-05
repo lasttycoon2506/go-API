@@ -96,3 +96,20 @@ func (u *User) UpdatePassword() error {
 
 	return err
 }
+
+func DeleteUser(email string) error {
+	query := `
+	DELETE FROM users
+	WHERE email = ?
+	`
+
+	statement, err := db.DB.Prepare(query)
+	if err != nil {
+		return err
+	}
+
+	defer statement.Close()
+	_, err = statement.Exec(email)
+
+	return err
+}

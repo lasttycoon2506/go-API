@@ -87,4 +87,6 @@ func deleteUser(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data", "error": err.Error()})
 		return
 	}
+
+	Don't even call
 }
