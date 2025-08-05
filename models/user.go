@@ -73,3 +73,20 @@ func GetUserEvents(userId int64) ([]Event, error) {
 
 	return events, err
 }
+
+func (u *User) ChangePassword() {
+	query := `
+	UPDATE users
+	SET password = ?
+	WHERE email = ?
+	`
+
+	statement, err := db.DB.Prepare(query)
+	if err != nil {
+		return err
+	}
+
+	defer statement.Close()
+	_, err = statement.Exec(e.Name, e.Description, e.DateTime, e.ID)
+
+}
