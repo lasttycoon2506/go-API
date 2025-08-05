@@ -92,9 +92,7 @@ func (u *User) ChangePassword() error {
 	}
 
 	defer statement.Close()
-	_, err = statement.Exec(newHashedPassword)
-	if err != nil {
-		return err
-	}
+	_, err = statement.Exec(newHashedPassword, u.Email)
 
+	return err
 }
