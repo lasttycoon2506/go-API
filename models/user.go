@@ -108,18 +108,37 @@ func DeleteUser(email string) error {
 		return errors.New("couldnt find users email")
 	}
 
-	deleteQuery := `
+	deleteUserQuery := `
 	DELETE FROM users
 	WHERE email = ?
 	`
 
-	deleteStatement, err := db.DB.Prepare(deleteQuery)
+	deleteUserStatement, err := db.DB.Prepare(deleteUserQuery)
 	if err != nil {
 		return err
 	}
 
-	defer deleteStatement.Close()
-	_, err = deleteStatement.Exec(email)
+	defer deleteUserStatement.Close()
+	_, err = deleteUserStatement.Exec(email)
+	if err != nil {
+		return errors.New("couldnt delete user from DB")
+	}
+
+	deleteUserEventsQuery := `
+	DELETE FROM users
+	WHERE user_id = ?
+	`
+
+	deleteUserEventsStatement, err := db.DB.Prepare(deleteUserEventsQuery)
+	if err != nil {
+		return err
+	}
+
+	defer deleteUserEventsStatement.Close()
+	_, err = deleteUserEventsStatement.Exec(userId)
+	if err != nil {
+		return errors.New("couldnt delete users events from DB")
+	}
 
 	return err
 }
