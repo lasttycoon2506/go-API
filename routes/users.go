@@ -70,4 +70,11 @@ func updatePassword(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data", "error": err.Error()})
 		return
 	}
+
+	err = user.UpdatePassword()
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error updating password", "error": err.Error()})
+		return
+	}
+
 }
