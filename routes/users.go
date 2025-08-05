@@ -78,5 +78,4 @@ func updatePassword(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, gin.H{"message": "password updated"})
-
 }
