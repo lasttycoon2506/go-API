@@ -81,9 +81,9 @@ func (u *User) UpdatePassword() error {
 	}
 
 	query := `
-	UPDATE users
-	SET password = ?
-	WHERE email = ?
+		UPDATE users
+		SET password = ?
+		WHERE email = ?
 	`
 
 	statement, err := db.DB.Prepare(query)
@@ -97,20 +97,10 @@ func (u *User) UpdatePassword() error {
 	return err
 }
 
-func DeleteUser(email string) error {
-	getUserIdQuery := `SELECT id FROM users WHERE email = ?`
-
-	dbRow := db.DB.QueryRow(getUserIdQuery, email)
-
-	var userId int64
-	err := dbRow.Scan(&userId)
-	if err != nil {
-		return errors.New("couldnt find users email")
-	}
-
+func DeleteUser(userId int64) error {
 	deleteUserQuery := `
-	DELETE FROM users
-	WHERE email = ?
+		DELETE FROM users
+		WHERE id = ?
 	`
 
 	deleteUserStatement, err := db.DB.Prepare(deleteUserQuery)
@@ -119,14 +109,14 @@ func DeleteUser(email string) error {
 	}
 
 	defer deleteUserStatement.Close()
-	_, err = deleteUserStatement.Exec(email)
+	_, err = deleteUserStatement.Exec(userId)
 	if err != nil {
 		return errors.New("couldnt delete user from DB")
 	}
 
 	deleteUserEventsQuery := `
-	DELETE FROM users
-	WHERE user_id = ?
+		DELETE FROM users
+		WHERE user_id = ?
 	`
 
 	deleteUserEventsStatement, err := db.DB.Prepare(deleteUserEventsQuery)
