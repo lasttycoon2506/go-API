@@ -88,5 +88,11 @@ func deleteUser(context *gin.Context) {
 		return
 	}
 
-	Don't even call
+	err = models.DeleteUser(email)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error deleting user", "error": err.Error()})
+		return
+	}
+
+	context.JSON(http.StatusBadRequest, gin.H{"message": "user deleted"})
 }
