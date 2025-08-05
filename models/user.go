@@ -115,7 +115,7 @@ func DeleteUser(userId int64) error {
 	}
 
 	deleteUserEventsQuery := `
-		DELETE FROM users
+		DELETE FROM events
 		WHERE user_id = ?
 	`
 
