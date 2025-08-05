@@ -75,6 +75,11 @@ func GetUserEvents(userId int64) ([]Event, error) {
 }
 
 func (u *User) ChangePassword() {
+	newHashedPassword, err := utils.HashPassword(u.Password)
+	if err != nil {
+		return err
+	}
+
 	query := `
 	UPDATE users
 	SET password = ?
