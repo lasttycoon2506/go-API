@@ -61,3 +61,13 @@ func getUserEvents(context *gin.Context) {
 
 	context.JSON(http.StatusOK, userEvents)
 }
+
+func updatePassword(context *gin.Context) {
+	var user models.User
+
+	err := context.ShouldBindBodyWithJSON(&user)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data", "error": err.Error()})
+		return
+	}
+}

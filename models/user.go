@@ -74,7 +74,7 @@ func GetUserEvents(userId int64) ([]Event, error) {
 	return events, err
 }
 
-func (u *User) ChangePassword() error {
+func (u *User) UpdatePassword() error {
 	newHashedPassword, err := utils.HashPassword(u.Password)
 	if err != nil {
 		return err
