@@ -18,6 +18,7 @@ func (u *User) Save() error {
 		INSERT INTO users (email, password)
 		VALUES (?, ?)
 	`
+
 	statement, err := db.DB.Prepare(query)
 	if err != nil {
 		return err

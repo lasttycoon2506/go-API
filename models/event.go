@@ -80,9 +80,9 @@ func GetAllEvents() ([]Event, error) {
 
 func (e Event) Update() error {
 	query := `
-	UPDATE events
-	SET name = ?, description = ?, date_time = ?
-	WHERE id = ?
+		UPDATE events
+		SET name = ?, description = ?, date_time = ?
+		WHERE id = ?
 	`
 
 	statement, err := db.DB.Prepare(query)
@@ -97,16 +97,16 @@ func (e Event) Update() error {
 }
 
 func (e Event) Delete() error {
-	deleteEventQuery := `DELETE FROM events WHERE id = ?`
+	query := `DELETE FROM events WHERE id = ?`
 
-	deleteEventsStatement, err := db.DB.Prepare(deleteEventQuery)
+	statement, err := db.DB.Prepare(query)
 	if err != nil {
 		return err
 	}
 
-	defer deleteEventsStatement.Close()
+	defer statement.Close()
 
-	_, err = deleteEventsStatement.Exec(e.ID)
+	_, err = statement.Exec(e.ID)
 	if err != nil {
 		return err
 	}
