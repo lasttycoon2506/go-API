@@ -81,14 +81,9 @@ func updatePassword(context *gin.Context) {
 }
 
 func deleteUser(context *gin.Context) {
-	var email string
-	err := context.ShouldBindBodyWithJSON(&email)
-	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "error parsing data", "error": err.Error()})
-		return
-	}
+	userId := context.GetInt64("userId")
 
-	err = models.DeleteUser(email)
+	err = models.DeleteUser(userId)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error deleting user", "error": err.Error()})
 		return
