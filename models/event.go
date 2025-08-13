@@ -57,7 +57,7 @@ func GetEvent(id int64) (*Event, error) {
 	return &event, nil
 }
 
-func GetAllEvents() ([]Event, error) {
+func GetEventsGroupedByUser() (map[int64]map[int64][]Event, error) {
 	query := `SELECT * FROM events ORDER BY date_time DESC`
 
 	dbRows, err := db.DB.Query(query)
@@ -66,17 +66,20 @@ func GetAllEvents() ([]Event, error) {
 	}
 	defer dbRows.Close()
 
-	var events []Event
+	grouped := make(map[int64]map[int64][]Event)
 	for dbRows.Next() {
 		var event Event
-		err := dbRows.Scan(&event.ID, &event.Name, &event.Description, &event.DateTime, &event.UserId)
+		err := dbRows.Scan(&event.ID, &event.Name, &event.Description, &event.DateTime, &event.UserId, &event.StoryId)
 		if err != nil {
 			return nil, err
 		}
-		events = append(events, event)
+		if grouped[event.UserId] == nil {
+			grouped[event.UserId] = make(map[int64][]Event)
+		}
+		grouped[event.UserId][event.StoryId] = append(grouped[event.UserId][event.StoryId], event)
 	}
 
-	return events, err
+	return grouped, nil
 }
 
 func (e Event) Update() error {

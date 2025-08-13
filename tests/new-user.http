@@ -3,11 +3,11 @@ Content-Type: application/json
 Origin: http://localhost:8080
 
 
-{"email": "t1@t1.com",
-"password": "t1!"} 
+# {"email": "t1@t1.com",
+# "password": "t1!"} 
 
-# {"email": "t2@t2.com",
-# "password": "t2!"} 
+{"email": "t2@t2.com",
+"password": "t2!"} 
 
 # {"email": "t3@t3.com",
 # "password": "t3!"} 

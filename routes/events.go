@@ -25,7 +25,7 @@ func getEvent(context *gin.Context) {
 }
 
 func getEvents(context *gin.Context) {
-	events, err := models.GetAllEvents()
+	events, err := models.GetEventsGroupedByUser()
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "error retrieving data", "error": err.Error()})
 		return
