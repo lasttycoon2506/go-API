@@ -1,1 +1,2 @@
 GET http://localhost:8080/events
+Origin: http://localhost:8080 

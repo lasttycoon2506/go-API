@@ -1,6 +1,8 @@
 POST http://localhost:8080/events
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InQyQHQyLmNvbSIsImV4cCI6MTc1NDQxNTY5MiwidXNlcklkIjo0fQ.RSAPNqzF5Xr189RiKLNKfUqxihUP7eMK39-PJi6-6MY
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InQxQHQxLmNvbSIsImV4cCI6MTc1NTEwNTI3MCwidXNlcklkIjoxfQ.c8QzgRbWC4aiATqdZT3Y_Sa9aPKazgMziajqkoGxGEs
+Origin: http://localhost:8080
 
-{"name": "t4",
-"description": "test descr"} 
+{"name": "t2",
+"description": "ja ja",
+"storyId": 1} 
